@@ -1,14 +1,14 @@
 #include <TXLib.h>
 
-int squaresol(double coef_a, double coef_b, double therdcoef, double *sol1, double *sol2 );
-int vvod(void);
-
-
+int squaresol(double coef_a, double coef_b, double coef_c, double *sol1, double *sol2 );
+int report(void);
+void input(double *coef_a, double *coef_b, double *coef_c );
+void output( int kolvo, double sol1, double sol2);
 int main(void)
 {
 
 
-    while(vvod() == 1) { }
+    while(report() == 1) { }
 
     return 0;
 }
@@ -63,7 +63,7 @@ int squaresol( double coef_a, double coef_b,  double coef_c, double *sol1, doubl
 
 }
 
-int  vvod(void)
+int  report(void)
 {
     double coef_a = 0;
     double coef_b = 0;
@@ -71,18 +71,28 @@ int  vvod(void)
     double sol1   = 0;
     double sol2   = 0;
     int kolvo     = 0;
-    int save_scanf = 0;
 
-    printf("Введите коэффициенты квадратного уравнения:");
-    while(scanf("%lg %lg %lg", &coef_a, &coef_b, &coef_c ) != 3)
+    input(&coef_a, &coef_b, &coef_c);
+    kolvo = squaresol(coef_a, coef_b, coef_c, &sol1, &sol2);
+    output(kolvo, sol1, sol2);
+
+    return 1;
+}
+
+void input( double *coef_a, double *coef_b, double *coef_c)
+{
+
+printf("Введите коэффициенты квадратного уравнения:");
+    while(scanf("%lg %lg %lg", coef_a, coef_b, coef_c ) != 3)
     {
      while(getchar() != '\n') {};
      printf("Введите другие значения:");
     }
+}
 
-      kolvo = squaresol(coef_a, coef_b, coef_c, &sol1, &sol2);
-
-            switch (kolvo)
+void output(int kolvo, double sol1, double sol2)
+{
+ switch (kolvo)
             {
                 case -1: printf("Бесконечное количество корней\n");
                      break;
@@ -96,5 +106,4 @@ int  vvod(void)
                      break;
 
             }
-     return 1;
 }
